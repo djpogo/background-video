@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>background video</title>
+    <meta name="description" content="example page for background video js handler">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/bg-video.css">
+  </head>
+  <body>
+    <section class="content-section">
+      <div class="bg-video" style="background-image:url('media/small.jpg')">
+        <video class="bg-video__video" autoplay muted playsinline loop data-bg-video>
+          <source src="media/small.mp4" type="video/mp4">
+          <!-- video taken from http://techslides.com/sample-webm-ogg-and-mp4-video-files-for-html5 -->
+        </video>
+      </div>
+    </section>
+    <script type="text/javascript" src="js/bg-video.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+  </body>
+</html>

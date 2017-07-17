@@ -1,0 +1,22 @@
+.bg-video {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.bg-video__video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transform: translate(0, 0);
+  will-change: transform;
+  opacity: 0;
+}
+.bg-video__video_visible {
+  opacity: 1;
+}
