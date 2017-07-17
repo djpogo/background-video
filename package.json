@@ -1,0 +1,33 @@
+{
+  "name": "background-video",
+  "version": "1.0.0",
+  "description": "a background video handler",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "./node_modules/http-server/bin/http-server && open http://127.0.0.1:8080"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/djpogo/background-video.git"
+  },
+  "keywords": [
+    "background",
+    "video",
+    "html5"
+  ],
+  "author": "Raoul Kramer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/djpogo/background-video/issues"
+  },
+  "homepage": "https://github.com/djpogo/background-video#readme",
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb-base": "^11.2.0",
+    "eslint-plugin-import": "^2.7.0",
+    "http-server": "^0.10.0"
+  },
+  "dependencies": {    
+  }
+}
