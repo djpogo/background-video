@@ -8,16 +8,24 @@ function BgVideo(videoElement) {
   var vE = videoElement;
   var metaDataLoaded = false;
   var visibleClass = 'bg-video__video_visible';
+  var videoOffsetX = 0;
+  var videoOffsetY = 0;
+  var videoParent = vE.parentElement;
+  var playing = false;
 
   function playVideo(forced) {
-    if (!forcedStop || forced === true) {
+    if (!playing && (!forcedStop || forced === true)) {
       vE.play();
+      playing = true;
       forcedStop = false;
     }
   }
 
   function pauseVideo(forced) {
-    vE.pause();
+    if (playing) {
+      vE.pause();
+      playing = false;
+    }    
     if (forced) {
       forcedStop = true;
     }
@@ -29,6 +37,26 @@ function BgVideo(videoElement) {
     } else {
       playVideo();
     }
+  }
+
+  function checkVideoVisibility() {
+    var scrollY = window.scrollY || window.pageYOffset;
+    var scrollX = window.scrollX || window.pageXOffset;
+    var windowWidth = videoParent.offsetWidth;
+    var windowHeight = videoParent.offsetHeight;
+
+    if ((scrollY + windowHeight) < videoOffsetY || scrollY > (videoOffsetY + windowHeight)) {
+      pauseVideo();
+    } else {
+      playVideo();
+    }
+  }
+
+  function getVideoOffset() {
+    var tmp = videoParent.getBoundingClientRect();
+    videoOffsetX = tmp.left;
+    videoOffsetY = tmp.top;
+    checkVideoVisibility();
   }
 
   function resizeVideo() {
@@ -54,6 +82,7 @@ function BgVideo(videoElement) {
       vE.style.transform = 'translate(' + translateX + 'px, ' + translateY + 'px)';
       vE.classList.add(visibleClass);
     });
+    getVideoOffset();
   }
 
   function metaDataLoad() {
@@ -68,6 +97,7 @@ function BgVideo(videoElement) {
     vE.addEventListener('loadedmetadata', metaDataLoad, false);
     document.addEventListener('visibilityChange', handleVisibilityChange, false);
     window.addEventListener('resize', resizeVideo, false);
+    window.addEventListener('scroll', checkVideoVisibility, false);
     vE.style.transition = 'none';
     window.setTimeout(function () {
       if (!metaDataLoaded) {
