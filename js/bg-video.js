@@ -1,6 +1,7 @@
 function BgVideo(videoElement) {
   'use strict';
 
+  var raf = window.requestAnimationFrame;
   var forcedStop = false;
   var nativeWidth;
   var nativeHeight;
@@ -31,8 +32,8 @@ function BgVideo(videoElement) {
   }
 
   function resizeVideo() {
-    var height = document.body.offsetHeight;
-    var width = document.body.offsetWidth;
+    var height = window.innerHeight;
+    var width = window.innerWidth;
     var newWidth = (height / nativeHeight) * nativeWidth;
     var newHeight = (width / nativeWidth) * nativeHeight;
     var translateX = 0;
@@ -47,11 +48,11 @@ function BgVideo(videoElement) {
       translateY = ((newHeight - height) / 2) * -1;
     }
 
-    window.requestAnimationFrame(function setVideoSize() {
-      vE.classList.add(visibleClass);
+    raf(function setVideoSize() {
       vE.style.width = newWidth + 'px';
       vE.style.height = newHeight + 'px';
       vE.style.transform = 'translate(' + translateX + 'px, ' + translateY + 'px)';
+      vE.classList.add(visibleClass);
     });
   }
 
