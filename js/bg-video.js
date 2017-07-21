@@ -92,7 +92,6 @@ function BgVideo(videoElement) {
   }
 
   function cbScroll() {
-    console.log('cbScroll');
     pauseVideo();
     window.clearTimeout(scrollTimeout);
     scrollTimeout = window.setTimeout(checkVideoVisibility, 1E2);
