@@ -12,6 +12,7 @@ function BgVideo(videoElement) {
   var videoOffsetY = 0;
   var videoParent = vE.parentElement;
   var playing = false;
+  var scrollTimeout;
 
   function playVideo(forced) {
     if (!playing && (!forcedStop || forced === true)) {
@@ -25,9 +26,7 @@ function BgVideo(videoElement) {
     if (playing) {
       vE.pause();
       playing = false;
-    }    
-    if (forced) {
-      forcedStop = true;
+      forcedStop = forced || false;
     }
   }
 
@@ -92,12 +91,19 @@ function BgVideo(videoElement) {
     resizeVideo();
   }
 
+  function cbScroll() {
+    console.log('cbScroll');
+    pauseVideo();
+    window.clearTimeout(scrollTimeout);
+    scrollTimeout = window.setTimeout(checkVideoVisibility, 1E2);
+  }
+
   (function init() {
     if (vE.nodeName !== 'VIDEO') return;
     vE.addEventListener('loadedmetadata', metaDataLoad, false);
     document.addEventListener('visibilityChange', handleVisibilityChange, false);
     window.addEventListener('resize', resizeVideo, false);
-    window.addEventListener('scroll', checkVideoVisibility, false);
+    window.addEventListener('scroll', cbScroll, false);
     vE.style.transition = 'none';
     window.setTimeout(function () {
       if (!metaDataLoaded) {
