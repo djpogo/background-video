@@ -59,8 +59,8 @@ function BgVideo(videoElement) {
   }
 
   function resizeVideo() {
-    var height = window.innerHeight;
-    var width = window.innerWidth;
+    var height = videoParent.offsetHeight;
+    var width = videoParent.offsetWidth;
     var newWidth = (height / nativeHeight) * nativeWidth;
     var newHeight = (width / nativeWidth) * nativeHeight;
     var translateX = 0;
