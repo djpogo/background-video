@@ -5,6 +5,7 @@
   overflow: hidden;
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center;
 }
 
 .bg-video__video {
