@@ -38,13 +38,17 @@ function BgVideo(videoElement) {
     }
   }
 
+  function outOfViewportVertical(scrollY, contentHeight, contentStartY) {
+    return ((scrollY + contentHeight) < contentStartY || scrollY > (contentStartY + contentHeight));
+  }
+
   function checkVideoVisibility() {
     var scrollY = window.scrollY || window.pageYOffset;
     var scrollX = window.scrollX || window.pageXOffset;
     var windowWidth = videoParent.offsetWidth;
     var windowHeight = videoParent.offsetHeight;
 
-    if ((scrollY + windowHeight) < videoOffsetY || scrollY > (videoOffsetY + windowHeight)) {
+    if (outOfViewportVertical(scrollY, windowHeight, videoOffsetY)) {
       pauseVideo();
     } else {
       playVideo();
