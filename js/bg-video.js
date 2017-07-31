@@ -6,12 +6,12 @@ function BgVideo(videoElement) {
   var nativeWidth;
   var nativeHeight;
   var vE = videoElement;
-  var metaDataLoaded = false;
   var visibleClass = 'bg-video__video_visible';
   var videoOffsetX = 0;
   var videoOffsetY = 0;
   var videoParent = vE.parentElement;
   var playing = false;
+  var playOnScroll = false;
   var scrollTimeout;
   var iOS = parseFloat( // @see https://gist.github.com/Craga89/2829457
 	    ('' + (/CPU.*OS ([0-9_]{1,5})|(CPU like).*AppleWebKit.*Mobile/i.exec(navigator.userAgent) || [0,''])[1])
@@ -60,7 +60,9 @@ function BgVideo(videoElement) {
   }
 
   function cbScroll() {
-    pauseVideo();
+    if (!playOnScroll) {
+      pauseVideo();
+    }
     window.clearTimeout(scrollTimeout);
     scrollTimeout = window.setTimeout(checkVideoVisibility, 1E2);
   }
@@ -99,8 +101,7 @@ function BgVideo(videoElement) {
     });
   }
 
-  function metaDataLoad() {
-    metaDataLoaded = true;
+  function durationChange() {
     nativeWidth = vE.videoWidth;
     nativeHeight = vE.videoHeight;
     resizeVideo();
@@ -119,17 +120,12 @@ function BgVideo(videoElement) {
   (function init() {
     if (vE.nodeName !== 'VIDEO') return;
     if (iosCheck()) {
-      vE.addEventListener('loadedmetadata', metaDataLoad, false);
+      playOnScroll = vE.dataset.playOnScroll !== undefined;
+      vE.addEventListener('durationchange', durationChange, false);
       document.addEventListener('visibilityChange', handleVisibilityChange, false);
       window.addEventListener('resize', resizeVideo, false);
       window.addEventListener('scroll', cbScroll, true);
       vE.style.transition = 'none';
-      window.setTimeout(function () {
-        if (!metaDataLoaded) {
-          metaDataLoad();
-        }
-      }, 5E2);
     }
-    
   }());
 }
