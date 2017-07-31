@@ -13,6 +13,10 @@ function BgVideo(videoElement) {
   var videoParent = vE.parentElement;
   var playing = false;
   var scrollTimeout;
+  var iOS = parseFloat( // @see https://gist.github.com/Craga89/2829457
+	    ('' + (/CPU.*OS ([0-9_]{1,5})|(CPU like).*AppleWebKit.*Mobile/i.exec(navigator.userAgent) || [0,''])[1])
+	    .replace('undefined', '3_2').replace('_', '.').replace('_', '')
+    ) || false;
 
   function playVideo(forced) {
     if (!playing && (!forcedStop || forced === true)) {
@@ -102,17 +106,30 @@ function BgVideo(videoElement) {
     resizeVideo();
   }
 
+  function iosCheck() {
+    // check if device is capable of background video 
+    // and remove video element on not compatible os's
+    if (iOS && iOS < 10.0) {
+      vE.remove();
+      return false;
+    }
+    return true;
+  }
+
   (function init() {
     if (vE.nodeName !== 'VIDEO') return;
-    vE.addEventListener('loadedmetadata', metaDataLoad, false);
-    document.addEventListener('visibilityChange', handleVisibilityChange, false);
-    window.addEventListener('resize', resizeVideo, false);
-    window.addEventListener('scroll', cbScroll, true);
-    vE.style.transition = 'none';
-    window.setTimeout(function () {
-      if (!metaDataLoaded) {
-        metaDataLoad();
-      }
-    }, 5E2);
+    if (iosCheck()) {
+      vE.addEventListener('loadedmetadata', metaDataLoad, false);
+      document.addEventListener('visibilityChange', handleVisibilityChange, false);
+      window.addEventListener('resize', resizeVideo, false);
+      window.addEventListener('scroll', cbScroll, true);
+      vE.style.transition = 'none';
+      window.setTimeout(function () {
+        if (!metaDataLoaded) {
+          metaDataLoad();
+        }
+      }, 5E2);
+    }
+    
   }());
 }
