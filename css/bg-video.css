@@ -7,7 +7,6 @@
   background-size: cover;
   background-position: center;
 }
-
 .bg-video__video {
   position: absolute;
   top: 0;
@@ -20,4 +19,11 @@
 }
 .bg-video__video--visible {
   opacity: 1;
+}
+
+.bg-video__content {
+  color: #fff;
+  padding: 10px;
+  position: absolute;
+  top: 0;
 }

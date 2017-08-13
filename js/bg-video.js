@@ -126,6 +126,7 @@ function BgVideo(videoElement) {
       window.addEventListener('resize', resizeVideo, false);
       window.addEventListener('scroll', cbScroll, true);
       vE.style.transition = 'none';
+      durationChange();
     }
   }());
 }
