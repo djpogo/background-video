@@ -18,6 +18,6 @@
   will-change: transform;
   opacity: 0;
 }
-.bg-video__video_visible {
+.bg-video__video--visible {
   opacity: 1;
 }

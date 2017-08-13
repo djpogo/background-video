@@ -6,7 +6,7 @@ function BgVideo(videoElement) {
   var nativeWidth;
   var nativeHeight;
   var vE = videoElement;
-  var visibleClass = 'bg-video__video_visible';
+  var visibleClass = 'bg-video__video--visible';
   var videoOffsetX = 0;
   var videoOffsetY = 0;
   var videoParent = vE.parentElement;
